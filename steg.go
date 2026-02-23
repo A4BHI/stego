@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"image"
 	_ "image/png"
 	"log"
@@ -30,6 +29,8 @@ func main() {
 	}
 
 	pixels := rgba.Pix
-	fmt.Println(pixels)
-}
+	// for i := 0; i < len(pixels); i++ {
+	// 	fmt.Println(i, ":", pixels[i], "\n")
+	// }
 
+}
