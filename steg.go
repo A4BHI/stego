@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	_ "image/png"
 	"log"
@@ -32,5 +33,7 @@ func main() {
 	// for i := 0; i < len(pixels); i++ {
 	// 	fmt.Println(i, ":", pixels[i], "\n")
 	// }
+
+	fmt.Println(pixels[6289403])
 
 }
