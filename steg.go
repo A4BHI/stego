@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"log"
 	"os"
@@ -11,7 +12,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	image.Decode()
-	rgba := image.NewRGBA(image.Bounds())
+	img, _, _ := image.Decode(file)
+	rgba, _ := img.(*image.RGBA)
+
+	pixels := rgba.Pix
+	fmt.Println(pixels)
 
 }
