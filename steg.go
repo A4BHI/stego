@@ -34,6 +34,8 @@ func main() {
 	// 	fmt.Println(i, ":", pixels[i], "\n")
 	// }
 
-	fmt.Println(pixels[6289403])
+	//fmt.Println(pixels[6289403])
 
+	//fmt.Println(pixels)
+	//bitwise niggaaaa
 }
