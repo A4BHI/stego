@@ -29,20 +29,23 @@ func main() {
 		}
 	}
 
-	//pixels := rgba.Pix
+	pixels := rgba.Pix
 
 	data, err := os.ReadFile("test.txt")
 	if err != nil {
 		log.Fatal("Error Reading Data: ", err)
 	}
+	index := 0
 
 	fmt.Println(data)
 	for i := 0; i < len(data); i++ {
 		for j := 7; j >= 0; j-- {
+
 			bit := (data[i] >> j) & 1
-			fmt.Print(bit)
+			pixels[index] = (pixels[index] & 254) | bit
+			index++
 		}
-		fmt.Println()
+
 	}
 
 	// for i := 0; i < len(pixels); i++ {
