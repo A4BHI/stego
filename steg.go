@@ -30,9 +30,9 @@ func main() {
 	}
 
 	pixels := rgba.Pix
-	// for i := 0; i < len(pixels); i++ {
-	// 	fmt.Println(i, ":", pixels[i], "\n")
-	// }
+	for i := 0; i < len(pixels); i++ {
+		fmt.Println(i, ":", pixels[i], "\n")
+	}
 
 	//fmt.Println(pixels[6289403])
 
