@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"image"
+	"image/png"
 	_ "image/png"
 	"log"
 	"os"
@@ -46,6 +47,14 @@ func main() {
 			index++
 		}
 
+	}
+	OutFile, err := os.Create("Output.png")
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = png.Encode(OutFile, rgba)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// for i := 0; i < len(pixels); i++ {
