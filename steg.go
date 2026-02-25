@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	_ "image/png"
 	"log"
@@ -28,11 +29,20 @@ func main() {
 		}
 	}
 
-	pixels := rgba.Pix
+	//pixels := rgba.Pix
 
-	data, err := os.ReadFile("test.png")
+	data, err := os.ReadFile("test.txt")
 	if err != nil {
 		log.Fatal("Error Reading Data: ", err)
+	}
+
+	fmt.Println(data)
+	for i := 0; i < len(data); i++ {
+		for j := 7; j >= 0; j-- {
+			bit := (data[i] >> j) & 1
+			fmt.Print(bit)
+		}
+		fmt.Println()
 	}
 
 	// for i := 0; i < len(pixels); i++ {
