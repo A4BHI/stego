@@ -1,6 +1,7 @@
 package encode
 
 import (
+	"encoding/binary"
 	"fmt"
 	"image"
 	"image/png"
@@ -35,7 +36,12 @@ func Encode(targetfile string) {
 	if err != nil {
 		log.Fatal("Error Reading Data: ", err)
 	}
+	length := len(data)
 	index := 0
+
+	lengthBytes := make([]byte, 4)
+
+	binary.BigEndian.PutUint32(lengthBytes, uint32(length))
 
 	fmt.Println(data)
 	for i := 0; i < len(data); i++ {
