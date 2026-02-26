@@ -2,6 +2,7 @@ package decode
 
 import (
 	"encoding/binary"
+	"fmt"
 	"image"
 	"log"
 	"os"
@@ -34,11 +35,13 @@ func Decode(targetfile string) {
 	length := make([]byte, 4)
 	for i := 0; i < 32; i++ {
 		for j := 7; j >= 0; j-- {
-			length = append(length, (pixels[i]>>j)&1)
+			bit := (pixels[i] >> j) & 1
+			length = append(length, bit)
 
 		}
 	}
 
 	lengthBytes := binary.BigEndian.Uint32(length)
+	fmt.Println(lengthBytes)
 
 }

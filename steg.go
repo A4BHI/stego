@@ -2,10 +2,11 @@ package main
 
 import (
 	_ "image/png"
-	"steg/encode"
+	"steg/decode"
 )
 
 func main() {
 
-	encode.Encode("tes.png")
+	//encode.Encode("tes.png")
+	decode.Decode("Output.png")
 }
