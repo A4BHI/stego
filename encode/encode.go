@@ -36,14 +36,24 @@ func Encode(targetfile string) {
 	if err != nil {
 		log.Fatal("Error Reading Data: ", err)
 	}
-	length := len(data)
 	index := 0
+	length := len(data)
 
 	lengthBytes := make([]byte, 4)
 
 	binary.BigEndian.PutUint32(lengthBytes, uint32(length))
+	fmt.Println(lengthBytes)
+	// lenindex := len(lengthBytes)
+	//fmt.Println(data)
 
-	fmt.Println(data)
+	for k := 0; k < len(lengthBytes); k++ {
+		for l := 7; l >= 0; l-- {
+			bit := (lengthBytes[k] >> l) & 1
+			pixels[index] = (pixels[index] & 254) | bit
+			index++
+		}
+	}
+
 	for i := 0; i < len(data); i++ {
 		for j := 7; j >= 0; j-- {
 
