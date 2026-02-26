@@ -46,18 +46,24 @@ func Encode(targetfile string) {
 	// lenindex := len(lengthBytes)
 	//fmt.Println(data)
 
-	for k := 0; k < len(lengthBytes); k++ {
-		for l := 7; l >= 0; l-- {
-			bit := (lengthBytes[k] >> l) & 1
-			pixels[index] = (pixels[index] & 254) | bit
-			index++
-		}
-	}
+	// for k := 0; k < len(lengthBytes); k++ {
+	// 	for l := 7; l >= 0; l-- {
+	// 		bit := (lengthBytes[k] >> l) & 1
+	// 		pixels[index] = (pixels[index] & 254) | bit
+	// 		index++
+	// 	}
+	// }
 
-	for i := 0; i < len(data); i++ {
+	payload := append(lengthBytes, data...)
+	totalbits := len(payload) * 8
+
+	if totalbits > len(pixels) {
+		log.Fatal("Not enough space in image.")
+	}
+	for i := 0; i < len(payload); i++ {
 		for j := 7; j >= 0; j-- {
 
-			bit := (data[i] >> j) & 1
+			bit := (payload[i] >> j) & 1
 			pixels[index] = (pixels[index] & 254) | bit
 			index++
 		}
