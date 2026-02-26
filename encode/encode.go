@@ -2,7 +2,6 @@ package encode
 
 import (
 	"encoding/binary"
-	"fmt"
 	"image"
 	"image/png"
 	"log"
@@ -42,7 +41,7 @@ func Encode(targetfile string) {
 	lengthBytes := make([]byte, 4)
 
 	binary.BigEndian.PutUint32(lengthBytes, uint32(length))
-	fmt.Println(lengthBytes)
+	//fmt.Println(lengthBytes)
 	// lenindex := len(lengthBytes)
 	//fmt.Println(data)
 
@@ -52,9 +51,9 @@ func Encode(targetfile string) {
 	// 		pixels[index] = (pixels[index] & 254) | bit
 	// 		index++
 	// 	}
-	// }
+	// } inefficient
 
-	payload := append(lengthBytes, data...)
+	payload := append(lengthBytes, data...) //more better way instead of two loops
 	totalbits := len(payload) * 8
 
 	if totalbits > len(pixels) {
