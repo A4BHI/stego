@@ -35,6 +35,7 @@ func Encode(targetfile string) {
 	if err != nil {
 		log.Fatal("Error Reading Data: ", err)
 	}
+
 	index := 0
 	length := len(data)
 
