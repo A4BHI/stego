@@ -6,5 +6,6 @@ import (
 )
 
 func main() {
+
 	encode.Encode("tes.png")
 }
