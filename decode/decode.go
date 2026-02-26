@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"image"
+	_ "image/png"
 	"log"
 	"os"
 )
@@ -31,25 +32,52 @@ func Decode(targetfile string) {
 	}
 
 	pixels := rgba.Pix
+
+	index := 0
+	bitsRead := 0
+
 	var byteslice []byte
 	var currbyte byte
 	bitcount := 0
-	length := make([]byte, 4)
-	for i := 0; i < 32; i++ {
-		bit := pixels[i] & 1
+
+	for bitsRead < 32 {
+
+		if index%4 == 3 {
+			index++
+			continue
+		}
+
+		bit := pixels[index] & 1
 
 		currbyte = (currbyte << 1) | bit
 		bitcount++
+		bitsRead++
+		index++
 
 		if bitcount == 8 {
 			byteslice = append(byteslice, currbyte)
-			bitcount = 0
 			currbyte = 0
+			bitcount = 0
+		}
+	}
+	index = 0
+	bitsPrinted := 0
+
+	fmt.Print("Decode bits: ")
+
+	for bitsPrinted < 32 {
+
+		if index%4 == 3 {
+			index++
+			continue
 		}
 
+		fmt.Print(pixels[index] & 1)
+		bitsPrinted++
+		index++
 	}
-
-	lengthBytes := binary.BigEndian.Uint32(length)
+	fmt.Println()
+	lengthBytes := binary.BigEndian.Uint32(byteslice)
 	fmt.Println(lengthBytes)
 
 }

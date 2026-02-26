@@ -2,8 +2,11 @@ package encode
 
 import (
 	"encoding/binary"
+	"fmt"
 	"image"
 	"image/png"
+	_ "image/png"
+
 	"log"
 	"os"
 )
@@ -30,6 +33,9 @@ func Encode(targetfile string) {
 	}
 
 	pixels := rgba.Pix
+	for i := 3; i < len(pixels); i += 4 {
+		pixels[i] = 255
+	}
 
 	data, err := os.ReadFile("test.txt")
 	if err != nil {
@@ -38,7 +44,7 @@ func Encode(targetfile string) {
 
 	index := 0
 	length := len(data)
-
+	fmt.Println("Encoded length:", len(data))
 	lengthBytes := make([]byte, 4)
 
 	binary.BigEndian.PutUint32(lengthBytes, uint32(length))
@@ -64,6 +70,10 @@ func Encode(targetfile string) {
 		for j := 7; j >= 0; j-- {
 
 			bit := (payload[i] >> j) & 1
+
+			for index%4 == 3 {
+				index++
+			}
 			pixels[index] = (pixels[index] & 254) | bit
 			index++
 		}
@@ -73,6 +83,22 @@ func Encode(targetfile string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	index = 0
+	bitsPrinted := 0
+	fmt.Print("Encode bits: ")
+
+	for bitsPrinted < 32 {
+
+		if index%4 == 3 {
+			index++
+			continue
+		}
+
+		fmt.Print(pixels[index] & 1)
+		bitsPrinted++
+		index++
+	}
+	fmt.Println()
 	err = png.Encode(OutFile, rgba)
 	if err != nil {
 		log.Fatal(err)
