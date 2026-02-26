@@ -31,14 +31,22 @@ func Decode(targetfile string) {
 	}
 
 	pixels := rgba.Pix
-
+	var byteslice []byte
+	var currbyte byte
+	bitcount := 0
 	length := make([]byte, 4)
 	for i := 0; i < 32; i++ {
-		for j := 7; j >= 0; j-- {
-			bit := (pixels[i] >> j) & 1
-			length = append(length, bit)
+		bit := pixels[i] & 1
 
+		currbyte = (currbyte << 1) | bit
+		bitcount++
+
+		if bitcount == 8 {
+			byteslice = append(byteslice, currbyte)
+			bitcount = 0
+			currbyte = 0
 		}
+
 	}
 
 	lengthBytes := binary.BigEndian.Uint32(length)
