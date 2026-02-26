@@ -22,6 +22,10 @@ func Decode(targetfile string) {
 	bounds := img.Bounds()
 	rgba := image.NewRGBA(bounds)
 
-	for y := bounds.Min.Y;i<
+	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+		for x := bounds.Min.X; x < bounds.Max.X; x++ {
+			rgba.Set(x, y, img.At(x, y))
+		}
+	}
 
 }
