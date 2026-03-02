@@ -34,7 +34,7 @@ func Encode(targetfile string) {
 
 	pixels := rgba.Pix
 	for i := 3; i < len(pixels); i += 4 {
-		pixels[i] = 255
+		pixels[i] = 1
 	}
 
 	data, err := os.ReadFile("test.txt")
