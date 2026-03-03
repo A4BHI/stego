@@ -24,7 +24,7 @@ func Encode(targetfile string) {
 	}
 
 	bounds := img.Bounds()
-	rgba := image.NewRGBA(bounds)
+	rgba := image.NewNRGBA(bounds)
 
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
@@ -33,9 +33,9 @@ func Encode(targetfile string) {
 	}
 
 	pixels := rgba.Pix
-	for i := 3; i < len(pixels); i += 4 {
-		pixels[i] = 255
-	}
+	// for i := 3; i < len(pixels); i += 4 {
+	// 	pixels[i] = 255
+	// }
 
 	data, err := os.ReadFile("test.txt")
 	if err != nil {

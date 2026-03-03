@@ -23,7 +23,7 @@ func Decode(targetfile string) {
 	}
 
 	bounds := img.Bounds()
-	rgba := image.NewRGBA(bounds)
+	rgba := image.NewNRGBA(bounds)
 
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
