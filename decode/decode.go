@@ -64,8 +64,6 @@ func Decode(targetfile string) {
 		bit := pixels[index] & 1
 		currbyte = (currbyte << 1) | bit
 		index++
-		sliceofdata = append(sliceofdata, bit)
-		index++
 		bitcount++
 		bitsRead++
 
@@ -76,7 +74,12 @@ func Decode(targetfile string) {
 		}
 	}
 
-	fmt.Println(string(sliceofdata))
+	fmt.Println(sliceofdata)
+
+	err = os.WriteFile("decoded.txt", sliceofdata, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	index = 0
 	bitsPrinted := 0
