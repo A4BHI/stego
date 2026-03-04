@@ -8,6 +8,6 @@ import (
 
 func main() {
 
-	encode.Encode("tes.png")
+	encode.Encode("tes.png", "test.txt")
 	decode.Decode("Output.png")
 }

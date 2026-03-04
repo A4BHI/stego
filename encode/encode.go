@@ -6,13 +6,14 @@ import (
 	"image"
 	"image/png"
 	_ "image/png"
+	"path/filepath"
 
 	"log"
 	"os"
 )
 
-func Encode(targetfile string) {
-	file, err := os.Open(targetfile)
+func Encode(imgfile string, secretfile string) {
+	file, err := os.Open(imgfile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -37,7 +38,7 @@ func Encode(targetfile string) {
 	// 	pixels[i] = 255
 	// }
 
-	data, err := os.ReadFile("test.txt")
+	data, err := os.ReadFile(secretfile)
 	if err != nil {
 		log.Fatal("Error Reading Data: ", err)
 	}
@@ -45,6 +46,7 @@ func Encode(targetfile string) {
 	index := 0
 	length := len(data)
 	fmt.Println("Encoded length:", len(data))
+	filepath.Ext(secretfile)
 	lengthBytes := make([]byte, 4)
 
 	binary.BigEndian.PutUint32(lengthBytes, uint32(length))
