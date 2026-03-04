@@ -55,17 +55,28 @@ func Decode(targetfile string) {
 			bitcount = 0
 		}
 	}
-	index = 33
+
 	bitsRead = 0
 	var sliceofdata []byte
 	lengthBytes := binary.BigEndian.Uint32(byteslice)
-	for index < int(lengthBytes) {
+	databits := int(lengthBytes) * 8
+	for bitsRead < databits {
 		bit := pixels[index] & 1
+		currbyte = (currbyte << 1) | bit
+		index++
 		sliceofdata = append(sliceofdata, bit)
 		index++
+		bitcount++
+		bitsRead++
+
+		if bitcount == 8 {
+			sliceofdata = append(sliceofdata, currbyte)
+			currbyte = 0
+			bitcount = 0
+		}
 	}
 
-	fmt.Println(sliceofdata)
+	fmt.Println(string(sliceofdata))
 
 	index = 0
 	bitsPrinted := 0
