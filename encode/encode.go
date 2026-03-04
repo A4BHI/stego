@@ -47,7 +47,9 @@ func Encode(imgfile string, secretfile string) {
 	length := len(data)
 	fmt.Println("Encoded length:", len(data))
 	ext := filepath.Ext(secretfile)
+	extdata := []byte(ext)
 
+	extbytes := byte(len(extdata))
 	lengthBytes := make([]byte, 4)
 
 	binary.BigEndian.PutUint32(lengthBytes, uint32(length))
@@ -63,7 +65,9 @@ func Encode(imgfile string, secretfile string) {
 	// 	}
 	// } inefficient
 
-	payload := append(lengthBytes, data...) //better way instead of two loops
+	payload := append(lengthBytes, extbytes)
+	payload = append(payload, extdata...)
+	payload = append(payload, data...) //better way instead of two loops
 	totalbits := len(payload) * 8
 
 	if totalbits > len(pixels) {
