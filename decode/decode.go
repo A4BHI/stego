@@ -55,6 +55,13 @@ func Decode(targetfile string) {
 			bitcount = 0
 		}
 	}
+	index = 33
+	bitsRead = 0
+	lengthBytes := binary.BigEndian.Uint32(byteslice)
+	for bitsRead < int(lengthBytes) {
+
+	}
+
 	index = 0
 	bitsPrinted := 0
 
@@ -67,7 +74,7 @@ func Decode(targetfile string) {
 		index++
 	}
 	fmt.Println()
-	lengthBytes := binary.BigEndian.Uint32(byteslice)
+	// lengthBytes := binary.BigEndian.Uint32(byteslice)
 	fmt.Println(lengthBytes)
 
 }
