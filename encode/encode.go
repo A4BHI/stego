@@ -46,7 +46,8 @@ func Encode(imgfile string, secretfile string) {
 	index := 0
 	length := len(data)
 	fmt.Println("Encoded length:", len(data))
-	filepath.Ext(secretfile)
+	ext := filepath.Ext(secretfile)
+
 	lengthBytes := make([]byte, 4)
 
 	binary.BigEndian.PutUint32(lengthBytes, uint32(length))
