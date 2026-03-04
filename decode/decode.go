@@ -42,11 +42,6 @@ func Decode(targetfile string) {
 
 	for bitsRead < 32 {
 
-		if index%4 == 3 {
-			index++
-			continue
-		}
-
 		bit := pixels[index] & 1
 
 		currbyte = (currbyte << 1) | bit
@@ -66,11 +61,6 @@ func Decode(targetfile string) {
 	fmt.Print("Decode bits: ")
 
 	for bitsPrinted < 32 {
-
-		if index%4 == 3 {
-			index++
-			continue
-		}
 
 		fmt.Print(pixels[index] & 1)
 		bitsPrinted++

@@ -71,9 +71,6 @@ func Encode(targetfile string) {
 
 			bit := (payload[i] >> j) & 1
 
-			for index%4 == 3 {
-				index++
-			}
 			pixels[index] = (pixels[index] & 254) | bit
 			index++
 		}
@@ -88,11 +85,6 @@ func Encode(targetfile string) {
 	fmt.Print("Encode bits: ")
 
 	for bitsPrinted < 32 {
-
-		if index%4 == 3 {
-			index++
-			continue
-		}
 
 		fmt.Print(pixels[index] & 1)
 		bitsPrinted++
