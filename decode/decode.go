@@ -2,7 +2,6 @@ package decode
 
 import (
 	"encoding/binary"
-	"fmt"
 	"image"
 	_ "image/png"
 	"log"
@@ -74,26 +73,9 @@ func Decode(targetfile string) {
 		}
 	}
 
-	fmt.Println(sliceofdata)
-
 	err = os.WriteFile("decoded.txt", sliceofdata, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	index = 0
-	bitsPrinted := 0
-
-	fmt.Print("Decode bits: ")
-
-	for bitsPrinted < 32 {
-
-		fmt.Print(pixels[index] & 1)
-		bitsPrinted++
-		index++
-	}
-	fmt.Println()
-	// lengthBytes := binary.BigEndian.Uint32(byteslice)
-	fmt.Println(lengthBytes)
 
 }

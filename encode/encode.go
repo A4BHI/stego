@@ -60,7 +60,7 @@ func Encode(targetfile string) {
 	// 	}
 	// } inefficient
 
-	payload := append(lengthBytes, data...) //more better way instead of two loops
+	payload := append(lengthBytes, data...) //better way instead of two loops
 	totalbits := len(payload) * 8
 
 	if totalbits > len(pixels) {
