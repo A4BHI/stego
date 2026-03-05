@@ -9,6 +9,13 @@ import (
 	"os"
 )
 
+type FileMetaData struct {
+	Datalength int
+	Extlength  int
+	Extname    string
+	CurrIndex  int
+}
+
 func Decode(targetfile string) {
 	inputimg, err := os.Open(targetfile)
 	if err != nil {
@@ -32,7 +39,13 @@ func Decode(targetfile string) {
 	}
 
 	pixels := rgba.Pix
+	filemetadata := getDatalenandExtLen(pixels)
+	filemetadata = getFileExtension(&filemetadata, pixels)
+	DecodeData(&filemetadata, pixels)
 
+}
+
+func getDatalenandExtLen(pixels []uint8) FileMetaData {
 	index := 0
 	bitsRead := 0
 
@@ -62,15 +75,25 @@ func Decode(targetfile string) {
 		}
 	}
 	fmt.Println(extlength)
-	extbits := int(extlength) * 8
-	fmt.Println(extbits)
 
-	bitsRead = 0
+	lengthBytes := binary.BigEndian.Uint32(byteslice)
+
+	return FileMetaData{
+		Datalength: int(lengthBytes) * 8,
+		Extlength:  int(extlength) * 8,
+		CurrIndex:  index,
+	}
+}
+
+func getFileExtension(filemetadata *FileMetaData, pixels []uint8) FileMetaData {
+	bitsRead := 0
+	var currbyte byte
+	bitcount := 0
 	var sliceofext []byte
-	for bitsRead < extbits {
-		bit := pixels[index] & 1
+	for bitsRead < filemetadata.Extlength {
+		bit := pixels[filemetadata.CurrIndex] & 1
 		currbyte = (currbyte << 1) | bit
-		index++
+		filemetadata.CurrIndex++
 		bitcount++
 		bitsRead++
 
@@ -81,15 +104,22 @@ func Decode(targetfile string) {
 		}
 	}
 
-	fmt.Println(string(sliceofext))
-	bitsRead = 0
+	// fmt.Println(string(sliceofext))
+	filemetadata.Extname = string(sliceofext)
+
+	return *filemetadata
+
+}
+
+func DecodeData(filemetadata *FileMetaData, pixels []uint8) {
+	bitsRead := 0
 	var sliceofdata []byte
-	lengthBytes := binary.BigEndian.Uint32(byteslice)
-	databits := int(lengthBytes) * 8
-	for bitsRead < databits {
-		bit := pixels[index] & 1
+	var currbyte byte
+	bitcount := 0
+	for bitsRead < filemetadata.Datalength {
+		bit := pixels[filemetadata.CurrIndex] & 1
 		currbyte = (currbyte << 1) | bit
-		index++
+		filemetadata.CurrIndex++
 		bitcount++
 		bitsRead++
 
@@ -99,10 +129,9 @@ func Decode(targetfile string) {
 			bitcount = 0
 		}
 	}
-	filename := "decoded" + string(sliceofext)
-	err = os.WriteFile(filename, sliceofdata, 0644)
+	filename := "decoded" + filemetadata.Extname
+	err := os.WriteFile(filename, sliceofdata, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
-
 }
