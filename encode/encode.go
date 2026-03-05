@@ -34,9 +34,6 @@ func Encode(imgfile string, secretfile string) {
 	}
 
 	pixels := rgba.Pix
-	// for i := 3; i < len(pixels); i += 4 {
-	// 	pixels[i] = 255
-	// }
 
 	data, err := os.ReadFile(secretfile)
 	if err != nil {
@@ -53,22 +50,14 @@ func Encode(imgfile string, secretfile string) {
 	lengthBytes := make([]byte, 4)
 
 	binary.BigEndian.PutUint32(lengthBytes, uint32(length))
-	//fmt.Println(lengthBytes)
-	// lenindex := len(lengthBytes)
-	//fmt.Println(data)
-
-	// for k := 0; k < len(lengthBytes); k++ {
-	// 	for l := 7; l >= 0; l-- {
-	// 		bit := (lengthBytes[k] >> l) & 1
-	// 		pixels[index] = (pixels[index] & 254) | bit
-	// 		index++
-	// 	}
-	// } inefficient
 
 	payload := append(lengthBytes, extbytes)
 	payload = append(payload, extdata...)
-	payload = append(payload, data...) //better way instead of two loops
+	payload = append(payload, data...)
 	totalbits := len(payload) * 8
+	fmt.Println(extbytes)
+	fmt.Println(extdata)
+	fmt.Println(lengthBytes)
 
 	if totalbits > len(pixels) {
 		log.Fatal("Not enough space in image.")

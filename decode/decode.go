@@ -38,8 +38,8 @@ func Decode(targetfile string) {
 	var byteslice []byte
 	var currbyte byte
 	bitcount := 0
-
-	for bitsRead < 32 {
+	var extlength byte
+	for bitsRead < 40 {
 
 		bit := pixels[index] & 1
 
@@ -48,8 +48,14 @@ func Decode(targetfile string) {
 		bitsRead++
 		index++
 
-		if bitcount == 8 {
+		if bitcount == 8 && bitsRead < 32 {
 			byteslice = append(byteslice, currbyte)
+			currbyte = 0
+			bitcount = 0
+		}
+
+		if bitsRead == 32 && bitcount == 8 {
+			extlength = currbyte
 			currbyte = 0
 			bitcount = 0
 		}
