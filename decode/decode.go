@@ -104,7 +104,6 @@ func getFileExtension(filemetadata *FileMetaData, pixels []uint8) {
 		}
 	}
 
-	// fmt.Println(string(sliceofext))
 	filemetadata.Extname = string(sliceofext)
 
 }
