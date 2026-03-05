@@ -49,7 +49,7 @@ func Decode(targetfile string) {
 		bitsRead++
 		index++
 
-		if bitcount == 8 && bitsRead < 32 {
+		if bitcount == 8 && bitsRead <= 32 {
 			byteslice = append(byteslice, currbyte)
 			currbyte = 0
 			bitcount = 0
@@ -62,6 +62,26 @@ func Decode(targetfile string) {
 		}
 	}
 	fmt.Println(extlength)
+	extbits := int(extlength) * 8
+	fmt.Println(extbits)
+
+	bitsRead = 0
+	var sliceofext []byte
+	for bitsRead < extbits {
+		bit := pixels[index] & 1
+		currbyte = (currbyte << 1) | bit
+		index++
+		bitcount++
+		bitsRead++
+
+		if bitcount == 8 {
+			sliceofext = append(sliceofext, currbyte)
+			currbyte = 0
+			bitcount = 0
+		}
+	}
+
+	fmt.Println(string(sliceofext))
 	bitsRead = 0
 	var sliceofdata []byte
 	lengthBytes := binary.BigEndian.Uint32(byteslice)
@@ -79,8 +99,8 @@ func Decode(targetfile string) {
 			bitcount = 0
 		}
 	}
-
-	err = os.WriteFile("decoded.txt", sliceofdata, 0644)
+	filename := "decoded" + string(sliceofext)
+	err = os.WriteFile(filename, sliceofdata, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
