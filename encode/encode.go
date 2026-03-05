@@ -55,9 +55,6 @@ func Encode(imgfile string, secretfile string) {
 	payload = append(payload, extdata...)
 	payload = append(payload, data...)
 	totalbits := len(payload) * 8
-	fmt.Println(extbytes)
-	fmt.Println(extdata)
-	fmt.Println(lengthBytes)
 
 	if totalbits > len(pixels) {
 		log.Fatal("Not enough space in image.")

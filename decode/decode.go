@@ -2,6 +2,7 @@ package decode
 
 import (
 	"encoding/binary"
+	"fmt"
 	"image"
 	_ "image/png"
 	"log"
@@ -54,13 +55,13 @@ func Decode(targetfile string) {
 			bitcount = 0
 		}
 
-		if bitsRead == 32 && bitcount == 8 {
+		if bitsRead >= 32 && bitcount == 8 {
 			extlength = currbyte
 			currbyte = 0
 			bitcount = 0
 		}
 	}
-
+	fmt.Println(extlength)
 	bitsRead = 0
 	var sliceofdata []byte
 	lengthBytes := binary.BigEndian.Uint32(byteslice)
