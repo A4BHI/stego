@@ -40,7 +40,7 @@ func Decode(targetfile string) {
 
 	pixels := rgba.Pix
 	filemetadata := getDatalenandExtLen(pixels)
-	filemetadata = getFileExtension(&filemetadata, pixels)
+	getFileExtension(&filemetadata, pixels)
 	DecodeData(&filemetadata, pixels)
 
 }
@@ -85,7 +85,7 @@ func getDatalenandExtLen(pixels []uint8) FileMetaData {
 	}
 }
 
-func getFileExtension(filemetadata *FileMetaData, pixels []uint8) FileMetaData {
+func getFileExtension(filemetadata *FileMetaData, pixels []uint8) {
 	bitsRead := 0
 	var currbyte byte
 	bitcount := 0
@@ -106,8 +106,6 @@ func getFileExtension(filemetadata *FileMetaData, pixels []uint8) FileMetaData {
 
 	// fmt.Println(string(sliceofext))
 	filemetadata.Extname = string(sliceofext)
-
-	return *filemetadata
 
 }
 
