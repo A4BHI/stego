@@ -3,7 +3,6 @@ package compression
 import (
 	"bytes"
 	"compress/gzip"
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -15,9 +14,7 @@ func Compress(file string) []byte {
 		log.Fatal(err)
 	}
 	defer data.Close()
-	if err != nil {
-		fmt.Println(err)
-	}
+
 	var b bytes.Buffer
 
 	gzip, err := gzip.NewWriterLevel(&b, gzip.BestCompression)
