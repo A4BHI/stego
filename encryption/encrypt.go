@@ -1,3 +1,5 @@
 package encryption
 
-func Enccrypt() {}
+func Encrypt(compressedData []byte) []byte {
+
+}
