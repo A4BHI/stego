@@ -41,6 +41,7 @@ func Decode(targetfile string) {
 	pixels := rgba.Pix
 	filemetadata := getDatalenandExtLen(pixels)
 	getFileExtension(&filemetadata, pixels)
+	salt, nonce := GetNonceandSalt(&filemetadata, pixels)
 	DecodeData(&filemetadata, pixels)
 
 }
@@ -140,7 +141,7 @@ func GetNonceandSalt(filemetadata *FileMetaData, pixels []uint8) ([]byte, []byte
 
 	return saltslice, nonceslice
 }
-func DecodeData(filemetadata *FileMetaData, pixels []uint8) {
+func DecodeData(filemetadata *FileMetaData, pixels []uint8) ([]byte, string) {
 	bitsRead := 0
 	var sliceofdata []byte
 	var currbyte byte
@@ -158,8 +159,11 @@ func DecodeData(filemetadata *FileMetaData, pixels []uint8) {
 		}
 	}
 	filename := "decoded" + filemetadata.Extname
-	err := os.WriteFile(filename, sliceofdata, 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// err := os.WriteFile(filename, sliceofdata, 0644)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	return sliceofdata, filename
+
 }
