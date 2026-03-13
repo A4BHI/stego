@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"steg/config"
+	"steg/decompression"
 	"steg/decryption"
 )
 
@@ -46,6 +47,12 @@ func Decode(cfg *config.Config) {
 	salt, nonce := GetNonceandSalt(&filemetadata, pixels)
 	ciphertext := DecodeData(&filemetadata, pixels)
 	plaintext := decryption.Decrypt(ciphertext, salt, nonce, cfg.Password)
+	DecodedData := decompression.Decompress(plaintext)
+
+	err = os.WriteFile(cfg.DecodedFile+filemetadata.Extname, DecodedData, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }
 
