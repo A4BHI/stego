@@ -7,6 +7,8 @@ import (
 	"image/png"
 	_ "image/png"
 	"path/filepath"
+	"steg/compression"
+	"steg/encryption"
 
 	"log"
 	"os"
@@ -35,14 +37,11 @@ func Encode(imgfile string, secretfile string) {
 
 	pixels := rgba.Pix
 
-	data, err := os.ReadFile(secretfile)
-	if err != nil {
-		log.Fatal("Error Reading Data: ", err)
-	}
-
+	data := compression.Compress(secretfile)
+	ciphertext, nonce, salt := encryption.Encrypt(data, "test")
 	index := 0
-	length := len(data)
-	fmt.Println("Encoded length:", len(data))
+	length := len(ciphertext)
+	fmt.Println("Encoded length:", len(ciphertext))
 	ext := filepath.Ext(secretfile)
 	extdata := []byte(ext)
 
@@ -53,7 +52,9 @@ func Encode(imgfile string, secretfile string) {
 
 	payload := append(lengthBytes, extbytes)
 	payload = append(payload, extdata...)
-	payload = append(payload, data...)
+	payload = append(payload, salt...)
+	payload = append(payload, nonce...)
+	payload = append(payload, ciphertext...)
 	totalbits := len(payload) * 8
 
 	if totalbits > len(pixels) {
