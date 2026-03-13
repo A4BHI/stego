@@ -20,7 +20,7 @@ type FileMetaData struct {
 }
 
 func Decode(cfg *config.Config) {
-	inputimg, err := os.Open(cfg.OutputImage)
+	inputimg, err := os.Open(cfg.OutputImage + ".png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -46,12 +46,14 @@ func Decode(cfg *config.Config) {
 	getFileExtension(&filemetadata, pixels)
 	salt, nonce := GetNonceandSalt(&filemetadata, pixels)
 	ciphertext := DecodeData(&filemetadata, pixels)
+	fmt.Println("decoded ciphertext:", len(ciphertext))
 	plaintext := decryption.Decrypt(ciphertext, salt, nonce, cfg.Password)
+	fmt.Println("decoded ciphertext:", len(ciphertext))
 	DecodedData := decompression.Decompress(plaintext)
 
 	err = os.WriteFile(cfg.DecodedFile+filemetadata.Extname, DecodedData, 0644)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("save to device", err)
 	}
 
 }
@@ -161,6 +163,7 @@ func DecodeData(filemetadata *FileMetaData, pixels []uint8) []byte {
 		currbyte = (currbyte << 1) | bit
 		filemetadata.CurrIndex++
 		bitcount++
+		bitsRead++
 
 		if bitcount == 8 {
 			sliceofdata = append(sliceofdata, currbyte)

@@ -71,7 +71,7 @@ func Encode(cfg *config.Config) {
 		}
 
 	}
-	OutFile, err := os.Create(cfg.OutputImage)
+	OutFile, err := os.Create(cfg.OutputImage + ".png")
 	if err != nil {
 		log.Fatal(err)
 	}

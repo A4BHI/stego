@@ -21,10 +21,11 @@ func Compress(file string) []byte {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer gzip.Close()
-
 	io.Copy(gzip, data)
-
+	err = gzip.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
 	return b.Bytes()
 
 }
