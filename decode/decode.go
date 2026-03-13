@@ -107,7 +107,39 @@ func getFileExtension(filemetadata *FileMetaData, pixels []uint8) {
 	filemetadata.Extname = string(sliceofext)
 
 }
+func GetNonceandSalt(filemetadata *FileMetaData, pixels []uint8) ([]byte, []byte) {
+	bitsRead := 0
 
+	var saltslice []byte
+	var nonceslice []byte
+
+	var currbyte byte
+	bitcount := 0
+
+	for bitsRead < 224 { //salt * nonce means 16 * 12 = 224 bits we have to iterate till 224
+
+		bit := pixels[filemetadata.CurrIndex] & 1
+
+		currbyte = (currbyte << 1) | bit
+		bitcount++
+		bitsRead++
+		filemetadata.CurrIndex++
+
+		if bitcount == 8 && bitsRead <= 128 { //first 128 bits = salt
+			saltslice = append(saltslice, currbyte)
+			currbyte = 0
+			bitcount = 0
+		}
+
+		if bitsRead > 128 && bitcount == 8 { //rest of the bits till 224 belongs to salt
+			nonceslice = append(nonceslice, currbyte)
+			currbyte = 0
+			bitcount = 0
+		}
+	}
+
+	return saltslice, nonceslice
+}
 func DecodeData(filemetadata *FileMetaData, pixels []uint8) {
 	bitsRead := 0
 	var sliceofdata []byte
@@ -118,7 +150,6 @@ func DecodeData(filemetadata *FileMetaData, pixels []uint8) {
 		currbyte = (currbyte << 1) | bit
 		filemetadata.CurrIndex++
 		bitcount++
-		bitsRead++
 
 		if bitcount == 8 {
 			sliceofdata = append(sliceofdata, currbyte)
