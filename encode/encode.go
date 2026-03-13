@@ -8,14 +8,15 @@ import (
 	_ "image/png"
 	"path/filepath"
 	"steg/compression"
+	"steg/config"
 	"steg/encryption"
 
 	"log"
 	"os"
 )
 
-func Encode(imgfile string, secretfile string) {
-	file, err := os.Open(imgfile)
+func Encode(cfg *config.Config) {
+	file, err := os.Open(cfg.InputImage)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -37,12 +38,12 @@ func Encode(imgfile string, secretfile string) {
 
 	pixels := rgba.Pix
 
-	data := compression.Compress(secretfile)
-	ciphertext, nonce, salt := encryption.Encrypt(data, "test")
+	data := compression.Compress(cfg.SecretFile)
+	ciphertext, nonce, salt := encryption.Encrypt(data, cfg.Password)
 	index := 0
 	length := len(ciphertext)
 	fmt.Println("Encoded length:", len(ciphertext))
-	ext := filepath.Ext(secretfile)
+	ext := filepath.Ext(cfg.SecretFile)
 	extdata := []byte(ext)
 
 	extbytes := byte(len(extdata))
@@ -70,7 +71,7 @@ func Encode(imgfile string, secretfile string) {
 		}
 
 	}
-	OutFile, err := os.Create("Output.png")
+	OutFile, err := os.Create(cfg.OutputImage)
 	if err != nil {
 		log.Fatal(err)
 	}

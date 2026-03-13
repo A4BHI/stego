@@ -7,6 +7,8 @@ import (
 	_ "image/png"
 	"log"
 	"os"
+	"steg/config"
+	"steg/decryption"
 )
 
 type FileMetaData struct {
@@ -16,8 +18,8 @@ type FileMetaData struct {
 	CurrIndex  int
 }
 
-func Decode(targetfile string) {
-	inputimg, err := os.Open(targetfile)
+func Decode(cfg *config.Config) {
+	inputimg, err := os.Open(cfg.OutputImage)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -42,7 +44,8 @@ func Decode(targetfile string) {
 	filemetadata := getDatalenandExtLen(pixels)
 	getFileExtension(&filemetadata, pixels)
 	salt, nonce := GetNonceandSalt(&filemetadata, pixels)
-	DecodeData(&filemetadata, pixels)
+	ciphertext, filename := DecodeData(&filemetadata, pixels)
+	plaintext := decryption.Decrypt(ciphertext, salt, nonce)
 
 }
 
