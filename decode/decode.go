@@ -44,8 +44,8 @@ func Decode(cfg *config.Config) {
 	filemetadata := getDatalenandExtLen(pixels)
 	getFileExtension(&filemetadata, pixels)
 	salt, nonce := GetNonceandSalt(&filemetadata, pixels)
-	ciphertext, filename := DecodeData(&filemetadata, pixels)
-	plaintext := decryption.Decrypt(ciphertext, salt, nonce)
+	ciphertext := DecodeData(&filemetadata, pixels)
+	plaintext := decryption.Decrypt(ciphertext, salt, nonce, cfg.Password)
 
 }
 
@@ -144,7 +144,7 @@ func GetNonceandSalt(filemetadata *FileMetaData, pixels []uint8) ([]byte, []byte
 
 	return saltslice, nonceslice
 }
-func DecodeData(filemetadata *FileMetaData, pixels []uint8) ([]byte, string) {
+func DecodeData(filemetadata *FileMetaData, pixels []uint8) []byte {
 	bitsRead := 0
 	var sliceofdata []byte
 	var currbyte byte
@@ -161,12 +161,12 @@ func DecodeData(filemetadata *FileMetaData, pixels []uint8) ([]byte, string) {
 			bitcount = 0
 		}
 	}
-	filename := "decoded" + filemetadata.Extname
+	// filename = filename + filemetadata.Extname
 	// err := os.WriteFile(filename, sliceofdata, 0644)
 	// if err != nil {
 	// 	log.Fatal(err)
 	// }
 
-	return sliceofdata, filename
+	return sliceofdata
 
 }

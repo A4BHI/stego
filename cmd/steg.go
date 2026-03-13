@@ -15,6 +15,6 @@ func main() {
 		DecodedFile: "decoded",
 		Password:    "test123",
 	}
-	encode.Encode("tes.png", "test.txt")
-	decode.Decode("Output.png")
+	encode.Encode(&cfg)
+	decode.Decode(&cfg)
 }
