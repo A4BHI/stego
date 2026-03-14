@@ -9,9 +9,9 @@ import (
 
 func main() {
 	cfg := config.Config{
-		InputImage:  "tes.png",
+		InputImage:  "compression/tes.png",
 		SecretFile:  "test.txt",
-		OutputImage: "decoded",
+		OutputImage: "encoded",
 		DecodedFile: "decoded",
 		Password:    "test123",
 	}
