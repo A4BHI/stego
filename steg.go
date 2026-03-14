@@ -2,19 +2,18 @@ package main
 
 import (
 	_ "image/png"
-	"steg/config"
-	"steg/decode"
-	"steg/encode"
+	"steg/cmd"
 )
 
 func main() {
-	cfg := config.Config{
-		InputImage:  "compression/tes.png",
-		SecretFile:  "test.txt",
-		OutputImage: "encoded",
-		DecodedFile: "decoded",
-		Password:    "test123",
-	}
-	encode.Encode(&cfg)
-	decode.Decode(&cfg)
+	cmd.Execute()
+	// cfg := config.Config{
+	// 	InputImage:  "tes.png",
+	// 	SecretFile:  "test.txt",
+	// 	OutputImage: "encoded",
+	// 	DecodedFile: "decoded",
+	// 	Password:    "test123",
+	// }
+	// encode.Encode(&cfg)
+	// decode.Decode(&cfg)
 }
