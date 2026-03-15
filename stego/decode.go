@@ -57,7 +57,27 @@ func Decode(cfg *config.Config) {
 	}
 
 }
+func readBytes(fmd *FileMetaData, pixels []uint8, length int) []byte {
+	bitsRead := 0
+	var currbyte byte
+	var byteslice []byte
+	bitcount := 0
+	for bitsRead < length {
+		bit := pixels[fmd.CurrIndex] & 1
 
+		currbyte = (currbyte << 1) | bit
+		bitcount++
+		bitsRead++
+		fmd.CurrIndex++
+		if bitcount == 8 {
+			byteslice = append(byteslice, currbyte)
+			currbyte = 0
+			bitcount = 0
+		}
+	}
+
+	return byteslice
+}
 func getDatalenandExtLen(pixels []uint8) FileMetaData {
 	index := 0
 	bitsRead := 0

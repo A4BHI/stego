@@ -46,6 +46,8 @@ func Encode(cfg *config.Config) {
 	ext := filepath.Ext(cfg.SecretFile)
 	extdata := []byte(ext)
 
+	// magic := []byte("a4bhi")
+
 	extbytes := byte(len(extdata))
 	lengthBytes := make([]byte, 4)
 
