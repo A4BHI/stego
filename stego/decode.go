@@ -1,4 +1,4 @@
-package decode
+package stego
 
 import (
 	"encoding/binary"
@@ -7,9 +7,9 @@ import (
 	_ "image/png"
 	"log"
 	"os"
+	"steg/compress"
 	"steg/config"
-	"steg/decompression"
-	"steg/decryption"
+	"steg/crypto"
 )
 
 type FileMetaData struct {
@@ -47,9 +47,9 @@ func Decode(cfg *config.Config) {
 	salt, nonce := GetNonceandSalt(&filemetadata, pixels)
 	ciphertext := DecodeData(&filemetadata, pixels)
 	fmt.Println("decoded ciphertext:", len(ciphertext))
-	plaintext := decryption.Decrypt(ciphertext, salt, nonce, cfg.Password)
+	plaintext := crypto.Decrypt(ciphertext, salt, nonce, cfg.Password)
 	fmt.Println("decoded ciphertext:", len(ciphertext))
-	DecodedData := decompression.Decompress(plaintext)
+	DecodedData := compress.Decompress(plaintext)
 
 	err = os.WriteFile(cfg.DecodedFile+filemetadata.Extname, DecodedData, 0644)
 	if err != nil {

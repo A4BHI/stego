@@ -3,8 +3,7 @@ package main
 import (
 	_ "image/png"
 	"steg/config"
-	"steg/decode"
-	"steg/encode"
+	"steg/stego"
 )
 
 func main() {
@@ -16,6 +15,6 @@ func main() {
 		DecodedFile: "decoded",
 		Password:    "test123",
 	}
-	encode.Encode(&cfg)
-	decode.Decode(&cfg)
+	stego.Encode(&cfg)
+	stego.Decode(&cfg)
 }

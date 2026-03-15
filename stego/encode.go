@@ -1,4 +1,4 @@
-package encode
+package stego
 
 import (
 	"encoding/binary"
@@ -7,9 +7,9 @@ import (
 	"image/png"
 	_ "image/png"
 	"path/filepath"
-	"steg/compression"
+	"steg/compress"
 	"steg/config"
-	"steg/encryption"
+	"steg/crypto"
 
 	"log"
 	"os"
@@ -38,8 +38,8 @@ func Encode(cfg *config.Config) {
 
 	pixels := rgba.Pix
 
-	data := compression.Compress(cfg.SecretFile)
-	ciphertext, nonce, salt := encryption.Encrypt(data, cfg.Password)
+	data := compress.Compress(cfg.SecretFile)
+	ciphertext, nonce, salt := crypto.Encrypt(data, cfg.Password)
 	index := 0
 	length := len(ciphertext)
 	fmt.Println("Encoded length:", len(ciphertext))
