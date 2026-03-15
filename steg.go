@@ -2,8 +2,9 @@ package main
 
 import (
 	_ "image/png"
-	"steg/config"
-	"steg/stego"
+
+	"github.com/a4bhi/stego/config"
+	"github.com/a4bhi/stego/stego"
 )
 
 func main() {

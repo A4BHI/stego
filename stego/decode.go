@@ -7,9 +7,10 @@ import (
 	_ "image/png"
 	"log"
 	"os"
-	"steg/compress"
-	"steg/config"
-	"steg/crypto"
+
+	"github.com/a4bhi/stego/compress"
+	"github.com/a4bhi/stego/config"
+	"github.com/a4bhi/stego/crypto"
 )
 
 type FileMetaData struct {
@@ -63,6 +64,9 @@ func readBytes(fmd *FileMetaData, pixels []uint8, length int) []byte {
 	var byteslice []byte
 	bitcount := 0
 	for bitsRead < length {
+		if fmd.CurrIndex >= len(pixels) {
+			log.Fatal("payload exceeds image size")
+		}
 		bit := pixels[fmd.CurrIndex] & 1
 
 		currbyte = (currbyte << 1) | bit

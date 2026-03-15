@@ -7,9 +7,10 @@ import (
 	"image/png"
 	_ "image/png"
 	"path/filepath"
-	"steg/compress"
-	"steg/config"
-	"steg/crypto"
+
+	"github.com/a4bhi/stego/compress"
+	"github.com/a4bhi/stego/config"
+	"github.com/a4bhi/stego/crypto"
 
 	"log"
 	"os"
