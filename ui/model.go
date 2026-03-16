@@ -24,7 +24,7 @@ func InitialModel() Model {
 	}
 
 	m := Model{
-		list:    list.New(items, list.DefaultDelegate{}, 0, 0),
+		list:    list.New(items, list.DefaultDelegate{}, 50, 10),
 		Welcome: "STEGO-a stegnography tool in golang",
 	}
 	m.list.Styles.Title = title
@@ -53,5 +53,5 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m Model) View() tea.View {
-	return tea.NewView(m.list.View())
+	return tea.NewView(m.Welcome + "\n\n" + m.list.View())
 }
