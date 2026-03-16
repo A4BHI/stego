@@ -1,8 +1,8 @@
 package ui
 
 import (
+	"charm.land/bubbles/v2/list"
 	tea "charm.land/bubbletea/v2"
-	"github.com/charmbracelet/bubbles/list"
 )
 
 type item string
@@ -15,7 +15,7 @@ type Model struct {
 }
 
 func InitialModel() Model {
-	title := list.DefaultStyles().Title
+	title := list.DefaultStyles(true).Title
 
 	items := []list.Item{
 		item("Encode"),
@@ -50,4 +50,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 	m.list, cmd = m.list.Update(msg)
 	return m, cmd
+}
+
+func (m Model) View() tea.View {
+	return tea.NewView(m.list.View())
 }
