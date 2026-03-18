@@ -62,13 +62,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m Model) View() tea.View {
-	v := tea.View{}
+	// v := tea.View{}
 	switch m.screen {
-	case "#mneu":
+	case "#menu":
 		content := m.Welcome + "\n\n" + m.list.View()
-		v = tea.NewView(docStyle.Render(content))
+		v := tea.NewView(docStyle.Render(content))
 		v.AltScreen = true
-		// return v
+		return v
 	}
-	return v
+	return tea.NewView("Unknown Screen")
 }
