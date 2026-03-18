@@ -1,32 +1,25 @@
 package ui
 
 import (
+	"charm.land/bubbles/v2/list"
 	tea "charm.land/bubbletea/v2"
 )
 
 type Model struct {
-	screen string
+	screen  string
+	list    list.Model
+	Welcome string
 }
 
-// func InitialModel() Model {
-// 	title := list.DefaultStyles(true).Title
+func InitialModel() Model {
+	l := NewMenu()
 
-// 	items := []list.Item{
-// 		item{"Encode", "Hide data inside an image"},
-// 		item{"Decode", "Extract hidden data"},
-// 		item{"Exit", "Quit the program"},
-// 	}
-
-// 	m := Model{
-// 		list:    list.New(items, list.NewDefaultDelegate(), 0, 70),
-// 		Welcome: "STEGO-a stegnography tool in golang",
-// 	}
-// 	m.list.Styles.Title = title
-
-// 	m.list.Title = "Choose an option from the list."
-
-// 	return m
-// }
+	return Model{
+		screen:  "#menu",
+		list:    l,
+		Welcome: "STEGO- Golang Based Stegnography Tool.",
+	}
+}
 
 func (m Model) Init() tea.Cmd {
 	return nil
