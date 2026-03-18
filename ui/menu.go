@@ -16,7 +16,8 @@ func (i item) Title() string       { return i.title }
 func (i item) Description() string { return i.description }
 func (i item) FilterValue() string { return i.title }
 
-func InitialModel() Model {
+func InitialModel() list.Model {
+
 	title := list.DefaultStyles(true).Title
 
 	items := []list.Item{
@@ -25,13 +26,11 @@ func InitialModel() Model {
 		item{"Exit", "Quit the program"},
 	}
 
-	m := Model{
-		list:    list.New(items, list.NewDefaultDelegate(), 0, 70),
-		Welcome: "STEGO-a stegnography tool in golang",
-	}
-	m.list.Styles.Title = title
+	l := list.New(items, list.NewDefaultDelegate(), 0, 70)
 
-	m.list.Title = "Choose an option from the list."
+	l.Styles.Title = title
 
-	return m
+	l.Title = "Choose an option from the list."
+
+	return l
 }
