@@ -42,8 +42,14 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c":
 			return m, tea.Quit
 		case "enter":
-			switch m.screen {
-			case "#menu":
+			selected := m.list.SelectedItem().(item)
+			switch selected.Title() {
+			case "#encode":
+				m.screen = "#encode"
+			case "#decode":
+				m.screen = "#decode"
+			case "#exit":
+				return m, tea.Quit
 
 			}
 
