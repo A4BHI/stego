@@ -7,12 +7,13 @@ import (
 )
 
 type Model struct {
-	screen       string
-	list         list.Model
-	Welcome      string
+	list    list.Model
+	Welcome string
+
 	CoverPicker  filepicker.Model
 	SecretPicker filepicker.Model
 
+	step        int
 	CoverImage  string
 	SecretFile  string
 	OutputImage string
@@ -27,11 +28,12 @@ func InitialModel() Model {
 	secret.AllowedTypes = []string{}
 
 	return Model{
-		screen:       "#menu",
+
 		list:         l,
 		Welcome:      "STEGO- Golang Based Stegnography Tool.",
 		CoverPicker:  cover,
 		SecretPicker: secret,
+		step:         -1,
 	}
 }
 
@@ -59,9 +61,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			selected := m.list.SelectedItem().(item)
 			switch selected.Title() {
 			case "Encode":
-				m.screen = "#encode"
+
 			case "Decode":
-				m.screen = "#decode"
+
 			case "Exit":
 				return m, tea.Quit
 
@@ -76,8 +78,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m Model) View() tea.View {
-	switch m.screen {
-	case "#menu":
+	switch m.step {
+	case -1:
 		content := m.Welcome + "\n\n" + m.list.View()
 		v := tea.NewView(docStyle.Render(content))
 		v.AltScreen = true
