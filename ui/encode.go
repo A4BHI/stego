@@ -1,6 +1,8 @@
 package ui
 
-import tea "charm.land/bubbletea/v2"
+import (
+	tea "charm.land/bubbletea/v2"
+)
 
 func UpdateEncode(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
@@ -62,5 +64,9 @@ func UpdateEnccodeScreen(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, nil
 		}
 	}
-	return m, nil
+
+	var cmd tea.Cmd
+
+	m.TextInput, cmd = m.TextInput.Update(msg)
+	return m, cmd
 }

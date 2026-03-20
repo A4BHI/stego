@@ -2,12 +2,12 @@ package ui
 
 import (
 	"os"
-	"strings"
 
 	"charm.land/bubbles/v2/filepicker"
 	"charm.land/bubbles/v2/list"
 	"charm.land/bubbles/v2/textinput"
 	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
 )
 
 type Model struct {
@@ -73,6 +73,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		m.CoverPicker, _ = m.CoverPicker.Update(msg)
 		m.SecretPicker, _ = m.SecretPicker.Update(msg)
+		m.TextInput, _ = m.TextInput.Update(msg)
 	} //Adjust the window size
 
 	switch m.screen {
@@ -110,15 +111,28 @@ func (m Model) View() tea.View {
 
 		}
 	case "#finalencodescreen":
-		var s strings.Builder
-		s.WriteString("Start Encoding\n\n")
-		s.WriteString("Cover Image:" + m.CoverImage + "\n\n")
-		s.WriteString("Secret File:" + m.SecretFile + "\n\n")
 
-		v := tea.NewView(s.String())
+		header := "Start Encoding\n\n" +
+			"Cover Image: " + m.CoverImage + "\n" +
+			"Secret File: " + m.SecretFile + "\n\n" +
+			m.headerView()
+
+		str := header + "\n" + m.TextInput.View() + m.footerView()
+
+		v := tea.NewView(str)
+		if !m.TextInput.VirtualCursor() {
+			v.Cursor = m.TextInput.Cursor()
+			v.Cursor.Y = lipgloss.Height(header)
+			v.Cursor.X = m.TextInput.Cursor().X
+		}
 		v.AltScreen = true
 		return v
 	}
 
 	return tea.NewView("Unknown Screen")
 }
+func (m Model) headerView() string {
+	return `Output Name:
+Enter destination name (e.g. encoded_image) [Extension .png auto-appended]`
+}
+func (m Model) footerView() string { return "\n(ctrl+c to quit)\n(ctrl+b to go back)" }
