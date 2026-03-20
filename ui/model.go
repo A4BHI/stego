@@ -60,7 +60,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		m.CoverPicker, _ = m.CoverPicker.Update(msg)
 		m.SecretPicker, _ = m.SecretPicker.Update(msg)
-	}
+	} //Adjust the window size
 
 	switch m.screen {
 	case "#menu":

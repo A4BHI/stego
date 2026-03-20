@@ -60,12 +60,10 @@ func UpdateMenu(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.step = 0
 				m.screen = "#encode"
 
-				// cover := filepicker.New()
-				// cover.AllowedTypes = []string{}
-				// cover.CurrentDirectory, _ = os.UserHomeDir()
+				m.CoverImage = ""
+				m.SecretFile = ""
 
-				// m.CoverPicker = cover
-				return m, m.CoverPicker.Init()
+				return m, m.CoverPicker.Init() //initialize the filepicker immediately
 			case "Decode":
 
 			case "Exit":
