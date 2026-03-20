@@ -86,6 +86,10 @@ func (m Model) View() tea.View {
 		v := tea.NewView(docStyle.Render(content))
 		v.AltScreen = true
 		return v
+	case 0:
+		return tea.NewView("Select Cover Image:\n\n" + m.CoverPicker.View())
+	case 1:
+		return tea.NewView("Select Secret File:\n\n" + m.SecretPicker.View())
 	}
 	return tea.NewView("Unknown Screen")
 }
