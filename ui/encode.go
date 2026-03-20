@@ -9,11 +9,17 @@ func UpdateEncode(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c":
 			return m, tea.Quit
 		case "ctrl+b":
-			m.screen = "#menu"
-			m.step = -1
+			if m.screen == "#encode" && m.step == 1 {
+				m.step = 0
+				m.CoverImage = ""
+				m.SecretFile = ""
+			} else {
+				m.screen = "#menu"
+				m.step = -1
+				m.CoverImage = ""
+				m.SecretFile = ""
+			}
 
-			m.CoverImage = ""
-			m.SecretFile = ""
 			return m, nil
 		}
 	}
