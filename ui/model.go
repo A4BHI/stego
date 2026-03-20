@@ -7,10 +7,15 @@ import (
 )
 
 type Model struct {
-	screen     string
-	list       list.Model
-	Welcome    string
-	CoverImage filepicker.Model
+	screen       string
+	list         list.Model
+	Welcome      string
+	CoverPicker  filepicker.Model
+	SecretPicker filepicker.Model
+
+	CoverImage  string
+	SecretFile  string
+	OutputImage string
 }
 
 func InitialModel() Model {
