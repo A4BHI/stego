@@ -1,6 +1,8 @@
 package ui
 
 import (
+	"os"
+
 	"charm.land/bubbles/v2/filepicker"
 	"charm.land/bubbles/v2/list"
 	tea "charm.land/bubbletea/v2"
@@ -23,9 +25,11 @@ func InitialModel() Model {
 	l := NewMenu()
 	cover := filepicker.New()
 	cover.AllowedTypes = []string{".png"}
+	cover.CurrentDirectory, _ = os.UserHomeDir()
 
 	secret := filepicker.New()
 	secret.AllowedTypes = []string{}
+	secret.CurrentDirectory, _ = os.UserHomeDir()
 
 	return Model{
 
@@ -87,9 +91,13 @@ func (m Model) View() tea.View {
 		v.AltScreen = true
 		return v
 	case 0:
-		return tea.NewView("Select Cover Image:\n\n" + m.CoverPicker.View())
+		v := tea.NewView("Select Cover Image:\n\n" + m.CoverPicker.View())
+		v.AltScreen = true
+		return v
 	case 1:
-		return tea.NewView("Select Secret File:\n\n" + m.SecretPicker.View())
+		v := tea.NewView("Select Secret File:\n\n" + m.SecretPicker.View())
+		v.AltScreen = true
+		return v
 	}
 	return tea.NewView("Unknown Screen")
 }
