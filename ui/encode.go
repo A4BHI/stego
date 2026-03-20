@@ -34,9 +34,27 @@ func UpdateEncode(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		if didselect, path := m.SecretPicker.DidSelectFile(msg); didselect {
 			m.SecretFile = path
-			m.step = 2
+
+			m.screen = "#finalencodescreen"
 		}
 	}
 
 	return m, cmd
+}
+
+func EnccodeScreen(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.KeyPressMsg:
+		switch msg.String() {
+		case "ctrl+c":
+			return m, tea.Quit
+		case "ctrl+b":
+			m.screen = "#encode"
+			m.step = 1
+
+			m.SecretFile = ""
+			return m, nil
+		}
+	}
+	return m, nil
 }

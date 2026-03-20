@@ -2,6 +2,7 @@ package ui
 
 import (
 	"os"
+	"strings"
 
 	"charm.land/bubbles/v2/filepicker"
 	"charm.land/bubbles/v2/list"
@@ -26,11 +27,12 @@ func InitialModel() Model {
 	l := NewMenu()
 	cover := filepicker.New()
 
-	cover.AllowedTypes = []string{".mod", ".sum", ".go", ".txt", ".md"}
+	cover.AllowedTypes = []string{".png"}
 	cover.CurrentDirectory, _ = os.UserHomeDir()
 
 	secret := filepicker.New()
-	secret.AllowedTypes = []string{".mod", ".sum", ".go", ".txt", ".md"}
+
+	secret.AllowedTypes = []string{}
 
 	secret.CurrentDirectory, _ = os.UserHomeDir()
 
@@ -67,6 +69,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return UpdateMenu(m, msg)
 	case "#encode":
 		return UpdateEncode(m, msg)
+	case "#finalencodescreen":
+		return EnccodeScreen(m, msg)
 
 	}
 	return m, nil
@@ -85,17 +89,24 @@ func (m Model) View() tea.View {
 
 		case 0:
 			v := tea.NewView("Select Cover Image:\n\n" + m.CoverPicker.View())
+
 			v.AltScreen = true
 			return v
 		case 1:
 			v := tea.NewView("Select Secret File:\n\n" + m.SecretPicker.View())
 			v.AltScreen = true
 			return v
-		case 2:
-			v := tea.NewView("Start Encoding")
-			v.AltScreen = true
-			return v
+
 		}
+	case "#finalencodescreen":
+		var s strings.Builder
+		s.WriteString("Start Encoding\n\n")
+		s.WriteString("Cover Image:" + m.CoverImage + "\n\n")
+		s.WriteString("Secret File:" + m.SecretFile + "\n\n")
+
+		v := tea.NewView(s.String())
+		v.AltScreen = true
+		return v
 	}
 
 	return tea.NewView("Unknown Screen")
