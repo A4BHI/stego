@@ -20,11 +20,18 @@ type Model struct {
 
 func InitialModel() Model {
 	l := NewMenu()
+	cover := filepicker.New()
+	cover.AllowedTypes = []string{".png"}
+
+	secret := filepicker.New()
+	secret.AllowedTypes = []string{}
 
 	return Model{
-		screen:  "#menu",
-		list:    l,
-		Welcome: "STEGO- Golang Based Stegnography Tool.",
+		screen:       "#menu",
+		list:         l,
+		Welcome:      "STEGO- Golang Based Stegnography Tool.",
+		CoverPicker:  cover,
+		SecretPicker: secret,
 	}
 }
 
