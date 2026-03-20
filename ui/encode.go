@@ -48,7 +48,7 @@ func UpdateEncode(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
-func EnccodeScreen(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
+func UpdateEnccodeScreen(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyPressMsg:
 		switch msg.String() {

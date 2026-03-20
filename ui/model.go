@@ -70,7 +70,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case "#encode":
 		return UpdateEncode(m, msg)
 	case "#finalencodescreen":
-		return EnccodeScreen(m, msg)
+		return UpdateEnccodeScreen(m, msg)
 
 	}
 	return m, nil
