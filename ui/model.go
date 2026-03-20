@@ -1,14 +1,16 @@
 package ui
 
 import (
+	"charm.land/bubbles/v2/filepicker"
 	"charm.land/bubbles/v2/list"
 	tea "charm.land/bubbletea/v2"
 )
 
 type Model struct {
-	screen  string
-	list    list.Model
-	Welcome string
+	screen     string
+	list       list.Model
+	Welcome    string
+	CoverImage filepicker.Model
 }
 
 func InitialModel() Model {
@@ -62,7 +64,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m Model) View() tea.View {
-	// v := tea.View{}
 	switch m.screen {
 	case "#menu":
 		content := m.Welcome + "\n\n" + m.list.View()
