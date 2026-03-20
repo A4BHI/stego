@@ -46,11 +46,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "enter":
 			selected := m.list.SelectedItem().(item)
 			switch selected.Title() {
-			case "#encode":
+			case "Encode":
 				m.screen = "#encode"
-			case "#decode":
+			case "Decode":
 				m.screen = "#decode"
-			case "#exit":
+			case "Exit":
 				return m, tea.Quit
 
 			}
