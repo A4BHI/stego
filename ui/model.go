@@ -6,6 +6,7 @@ import (
 
 	"charm.land/bubbles/v2/filepicker"
 	"charm.land/bubbles/v2/list"
+	"charm.land/bubbles/v2/textinput"
 	tea "charm.land/bubbletea/v2"
 )
 
@@ -16,6 +17,7 @@ type Model struct {
 
 	CoverPicker  filepicker.Model
 	SecretPicker filepicker.Model
+	TextInput    textinput.Model
 
 	step        int
 	CoverImage  string
@@ -36,12 +38,20 @@ func InitialModel() Model {
 
 	secret.CurrentDirectory, _ = os.UserHomeDir()
 
+	t1 := textinput.New()
+	t1.Placeholder = "Output image name "
+	t1.CharLimit = 50
+	t1.SetVirtualCursor(false)
+	t1.Focus()
+	t1.SetWidth(20)
+
 	return Model{
 		screen:       "#menu",
 		list:         l,
 		Welcome:      "STEGO- Golang Based Stegnography Tool.",
 		CoverPicker:  cover,
 		SecretPicker: secret,
+		TextInput:    t1,
 		step:         -1,
 	}
 }
@@ -50,6 +60,7 @@ func (m Model) Init() tea.Cmd {
 	return tea.Batch(
 		m.CoverPicker.Init(),
 		m.SecretPicker.Init(),
+		textinput.Blink,
 	)
 
 }
