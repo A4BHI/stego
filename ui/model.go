@@ -61,7 +61,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			selected := m.list.SelectedItem().(item)
 			switch selected.Title() {
 			case "Encode":
-
+				m.step = 0
+				NewM, cmd := UpdateEncode(m, msg)
+				return NewM, cmd
 			case "Decode":
 
 			case "Exit":
