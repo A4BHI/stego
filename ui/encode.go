@@ -11,6 +11,7 @@ func UpdateEncode(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 		if didselect, path := m.CoverPicker.DidSelectFile(msg); didselect {
 			m.CoverImage = path
 			m.step = 1
+			return m, m.SecretPicker.Init()
 
 		}
 	case 1:
