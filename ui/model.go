@@ -17,7 +17,8 @@ type Model struct {
 
 	CoverPicker  filepicker.Model
 	SecretPicker filepicker.Model
-	TextInput    textinput.Model
+	TextInput1   textinput.Model
+	TextInput2   textinput.Model
 
 	step        int
 	CoverImage  string
@@ -51,7 +52,7 @@ func InitialModel() Model {
 		Welcome:      "STEGO- Golang Based Stegnography Tool.",
 		CoverPicker:  cover,
 		SecretPicker: secret,
-		TextInput:    t1,
+		TextInput1:   t1,
 		step:         -1,
 	}
 }
@@ -73,7 +74,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		m.CoverPicker, _ = m.CoverPicker.Update(msg)
 		m.SecretPicker, _ = m.SecretPicker.Update(msg)
-		m.TextInput, _ = m.TextInput.Update(msg)
+		m.TextInput1, _ = m.TextInput1.Update(msg)
 	} //Adjust the window size
 
 	switch m.screen {
@@ -117,13 +118,13 @@ func (m Model) View() tea.View {
 			"Secret File: " + m.SecretFile + "\n\n" +
 			m.headerView()
 
-		str := header + "\n" + m.TextInput.View() + m.footerView()
+		str := header + "\n" + m.TextInput1.View() + m.footerView()
 
 		v := tea.NewView(str)
-		if !m.TextInput.VirtualCursor() {
-			v.Cursor = m.TextInput.Cursor()
+		if !m.TextInput1.VirtualCursor() {
+			v.Cursor = m.TextInput1.Cursor()
 			v.Cursor.Y = lipgloss.Height(header)
-			v.Cursor.X = m.TextInput.Cursor().X
+			v.Cursor.X = m.TextInput1.Cursor().X
 		}
 		v.AltScreen = true
 		return v

@@ -63,7 +63,7 @@ func UpdateEnccodeScreen(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.SecretFile = ""
 			return m, nil
 		case "enter":
-			m.OutputImage = m.TextInput.Value()
+			m.OutputImage = m.TextInput1.Value()
 			// cfg := config.Config{
 			// 	InputImage:  m.CoverImage,
 			// 	SecretFile:  m.SecretFile,
@@ -75,6 +75,6 @@ func UpdateEnccodeScreen(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	var cmd tea.Cmd
 
-	m.TextInput, cmd = m.TextInput.Update(msg)
+	m.TextInput1, cmd = m.TextInput1.Update(msg)
 	return m, cmd
 }
