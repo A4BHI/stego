@@ -46,6 +46,13 @@ func InitialModel() Model {
 	t1.Focus()
 	t1.SetWidth(20)
 
+	t2 := textinput.New()
+	t2.Placeholder = "Encryption Password"
+	t2.CharLimit = 50
+	t2.SetVirtualCursor(false)
+	t2.Focus()
+	t2.SetWidth(20)
+
 	return Model{
 		screen:       "#menu",
 		list:         l,
@@ -53,6 +60,7 @@ func InitialModel() Model {
 		CoverPicker:  cover,
 		SecretPicker: secret,
 		TextInput1:   t1,
+		TextInput2:   t2,
 		step:         -1,
 	}
 }
