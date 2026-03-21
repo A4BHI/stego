@@ -42,7 +42,7 @@ func UpdateEncode(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		if didselect, path := m.SecretPicker.DidSelectFile(msg); didselect {
 			m.SecretFile = path
-
+			m.step = 2
 			m.screen = "#finalencodescreen"
 		}
 	}
@@ -51,6 +51,7 @@ func UpdateEncode(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func UpdateEnccodeScreen(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
+	var cmd tea.Cmd
 	switch msg := msg.(type) {
 	case tea.KeyPressMsg:
 		switch msg.String() {
@@ -63,6 +64,13 @@ func UpdateEnccodeScreen(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.SecretFile = ""
 			return m, nil
 		case "enter":
+			m.step = 2
+			m.TextInput2, cmd = m.TextInput2.Update(msg)
+			return m, cmd
+
+			// if m.TextInput1.Value() != " " {
+
+			// }
 			// m.OutputImage = m.TextInput1.Value()
 			// cfg := config.Config{
 			// 	InputImage:  m.CoverImage,
@@ -72,12 +80,9 @@ func UpdateEnccodeScreen(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		}
 	}
-	var cmd tea.Cmd
-	if m.TextInput1.Value() != "" {
-		m.TextInput2, cmd = m.TextInput2.Update(msg)
-		return m, cmd
-	}
 
 	m.TextInput1, cmd = m.TextInput1.Update(msg)
+
 	return m, cmd
+
 }

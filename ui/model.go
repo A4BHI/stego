@@ -83,6 +83,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.CoverPicker, _ = m.CoverPicker.Update(msg)
 		m.SecretPicker, _ = m.SecretPicker.Update(msg)
 		m.TextInput1, _ = m.TextInput1.Update(msg)
+		m.TextInput2, _ = m.TextInput2.Update(msg)
 	} //Adjust the window size
 
 	switch m.screen {
@@ -126,14 +127,22 @@ func (m Model) View() tea.View {
 			"Secret File: " + m.SecretFile + "\n\n" +
 			m.headerView()
 
-		str := header + "\n" + m.TextInput1.View() + m.footerView()
-
+		str := header + "\n" + m.TextInput1.View() + "\nEnter Encryption Password\n" + m.TextInput2.View() + m.footerView()
 		v := tea.NewView(str)
 		if !m.TextInput1.VirtualCursor() {
 			v.Cursor = m.TextInput1.Cursor()
 			v.Cursor.Y = lipgloss.Height(header)
 			v.Cursor.X = m.TextInput1.Cursor().X
 		}
+		if m.step == 2 {
+			v := tea.NewView("\nEnter Encryption Password\n" + m.TextInput2.View())
+			if !m.TextInput2.VirtualCursor() {
+				v.Cursor = m.TextInput2.Cursor()
+				v.Cursor.Y = lipgloss.Height(header)
+				v.Cursor.X = m.TextInput2.Cursor().X
+			}
+		}
+
 		v.AltScreen = true
 		return v
 	}
