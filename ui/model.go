@@ -20,6 +20,7 @@ type Model struct {
 	TextInput1   textinput.Model
 	TextInput2   textinput.Model
 
+	FocusIndex  int
 	step        int
 	CoverImage  string
 	SecretFile  string
@@ -50,7 +51,7 @@ func InitialModel() Model {
 	t2.Placeholder = "Encryption Password"
 	t2.CharLimit = 50
 	t2.SetVirtualCursor(false)
-	t2.Focus()
+	// t2.Focus()
 	t2.SetWidth(20)
 
 	return Model{

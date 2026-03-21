@@ -64,7 +64,12 @@ func UpdateEnccodeScreen(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.SecretFile = ""
 			return m, nil
 		case "enter":
-			m.step = 2
+			if m.FocusIndex == 0 {
+				m.FocusIndex = 1
+				m.TextInput1.Blur()
+				return m, m.TextInput2.Focus()
+			}
+
 			m.TextInput2, cmd = m.TextInput2.Update(msg)
 			return m, cmd
 
@@ -81,8 +86,14 @@ func UpdateEnccodeScreen(m Model, msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	m.TextInput1, cmd = m.TextInput1.Update(msg)
+	if m.FocusIndex == 0 {
+		m.TextInput1, cmd = m.TextInput1.Update(msg)
 
-	return m, cmd
+		return m, cmd
+	} else {
+		m.TextInput2, cmd = m.TextInput2.Update(msg)
+
+		return m, cmd
+	}
 
 }
