@@ -130,19 +130,24 @@ func (m Model) View() tea.View {
 
 		str := header + "\n" + m.TextInput1.View() + "\nEnter Encryption Password\n" + m.TextInput2.View() + m.footerView()
 		v := tea.NewView(str)
-		if !m.TextInput1.VirtualCursor() {
+		if m.FocusIndex == 0 {
+
 			v.Cursor = m.TextInput1.Cursor()
 			v.Cursor.Y = lipgloss.Height(header)
 			v.Cursor.X = m.TextInput1.Cursor().X
+
+		} else {
+			v.Cursor = m.TextInput2.Cursor()
+			v.Cursor.Y = lipgloss.Height(header) + 2
+			v.Cursor.X = m.TextInput2.Cursor().X
 		}
-		if m.step == 2 {
-			v := tea.NewView("\nEnter Encryption Password\n" + m.TextInput2.View())
-			if !m.TextInput2.VirtualCursor() {
-				v.Cursor = m.TextInput2.Cursor()
-				v.Cursor.Y = lipgloss.Height(header)
-				v.Cursor.X = m.TextInput2.Cursor().X
-			}
-		}
+
+		// if m.step == 2 {
+		// 	v := tea.NewView("\nEnter Encryption Password\n" + m.TextInput2.View())
+		// 	if !m.TextInput2.VirtualCursor() {
+
+		// 	}
+		// }
 
 		v.AltScreen = true
 		return v
