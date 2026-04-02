@@ -23,12 +23,13 @@ type Model struct {
 	SecretPicker filepicker.Model
 	TextInput1   textinput.Model
 	TextInput2   textinput.Model
-
-	FocusIndex  int
-	step        int
-	CoverImage  string
-	SecretFile  string
-	OutputImage string
+	width        int
+	height       int
+	FocusIndex   int
+	step         int
+	CoverImage   string
+	SecretFile   string
+	OutputImage  string
 }
 
 func InitialModel() Model {
@@ -80,8 +81,10 @@ func (m Model) Init() tea.Cmd {
 }
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	if msg, ok := msg.(tea.WindowSizeMsg); ok {
 
+	if msg, ok := msg.(tea.WindowSizeMsg); ok {
+		m.width = msg.Width
+		m.height = msg.Height
 		h, v := docStyle.GetFrameSize()
 		m.list.SetSize(msg.Width-h, msg.Height-v-2)
 
@@ -133,7 +136,8 @@ func (m Model) View() tea.View {
 			m.headerView()
 
 		str := header + "\n" + m.TextInput1.View() + "\nEnter Encryption Password\n" + m.TextInput2.View() + m.footerView()
-		v := tea.NewView(txtstyle.Render(str))
+		str2 := lipgloss.Place(m.width, m.height, lipgloss.Center, lipgloss.Center, txtstyle.Render(str))
+		v := tea.NewView(str2)
 		if m.FocusIndex == 0 {
 
 			v.Cursor = m.TextInput1.Cursor()
