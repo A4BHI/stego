@@ -11,7 +11,18 @@ import (
 )
 
 var (
-	txtstyle = lipgloss.NewStyle().Border(lipgloss.DoubleBorder(), true)
+	txtstyle = lipgloss.NewStyle().BorderStyle(myCuteBorder).BorderForeground(lipgloss.Color("63")).UnderlineStyle(lipgloss.UnderlineCurly)
+
+	myCuteBorder = lipgloss.Border{
+		Top:         "._.:*:",
+		Bottom:      "._.:*:",
+		Left:        "|*",
+		Right:       "|*",
+		TopLeft:     "*",
+		TopRight:    "*",
+		BottomLeft:  "*",
+		BottomRight: "*",
+	}
 )
 
 type Model struct {
@@ -137,7 +148,7 @@ func (m Model) View() tea.View {
 
 		str := header + "\n" + m.TextInput1.View() + "\nEnter Encryption Password\n" + m.TextInput2.View() + m.footerView()
 		str2 := lipgloss.Place(m.width, m.height, lipgloss.Center, lipgloss.Center, txtstyle.Render(str))
-		v := tea.NewView(str2)
+		v := tea.NewView("TESTING HEADING " + str2)
 		if m.FocusIndex == 0 {
 
 			v.Cursor = m.TextInput1.Cursor()
