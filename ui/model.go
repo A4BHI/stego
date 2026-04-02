@@ -10,6 +10,10 @@ import (
 	"charm.land/lipgloss/v2"
 )
 
+var (
+	txtstyle = lipgloss.NewStyle().Border(lipgloss.DoubleBorder(), true)
+)
+
 type Model struct {
 	screen  string
 	list    list.Model
@@ -111,7 +115,7 @@ func (m Model) View() tea.View {
 		switch m.step {
 
 		case 0:
-			v := tea.NewView("Select Cover Image:\n\n" + m.CoverPicker.View())
+			v := tea.NewView(txtstyle.Render("Select Cover Image:\n\n") + m.CoverPicker.View())
 
 			v.AltScreen = true
 			return v
