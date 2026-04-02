@@ -133,7 +133,7 @@ func (m Model) View() tea.View {
 			m.headerView()
 
 		str := header + "\n" + m.TextInput1.View() + "\nEnter Encryption Password\n" + m.TextInput2.View() + m.footerView()
-		v := tea.NewView(str)
+		v := tea.NewView(txtstyle.Render(str))
 		if m.FocusIndex == 0 {
 
 			v.Cursor = m.TextInput1.Cursor()
