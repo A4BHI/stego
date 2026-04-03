@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	bdr = lipgloss.NewStyle().BorderStyle(myCuteBorder).BorderForeground(lipgloss.Color("63")).Bold(true).Blink(true).Foreground(lipgloss.Color("#FAFAFA"))
+	bdr = lipgloss.NewStyle().BorderStyle(myCuteBorder).BorderForeground(lipgloss.Color("63")).Bold(true).Foreground(lipgloss.Color("#84cb94"))
 
 	myCuteBorder = lipgloss.Border{
 		Top:         "._.:*:",
@@ -27,6 +27,12 @@ var (
 	textstyle = lipgloss.NewStyle().
 			Bold(true).
 			Foreground(lipgloss.Color("#FAFAFA"))
+
+	appStyle = lipgloss.NewStyle().
+			Foreground(lipgloss.Color("226")).
+			Background(lipgloss.Color("63")).
+			PaddingTop(2).
+			PaddingLeft(4)
 )
 
 type Model struct {
@@ -140,6 +146,7 @@ func (m Model) View() tea.View {
 		case 1:
 			v := tea.NewView(textstyle.Render("Select Secret File:") + "\n" + m.SecretPicker.View())
 			v.AltScreen = true
+
 			return v
 
 		}
@@ -173,6 +180,7 @@ func (m Model) View() tea.View {
 		// }
 
 		v.AltScreen = true
+		v.BackgroundColor = lipgloss.Red
 		return v
 	}
 
