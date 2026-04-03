@@ -11,11 +11,11 @@ import (
 )
 
 var (
-	bdr = lipgloss.NewStyle().BorderStyle(myCuteBorder).BorderForeground(lipgloss.Color("63")).Bold(true).Foreground(lipgloss.Color("#84cb94"))
+	bdr = lipgloss.NewStyle().BorderStyle(myCuteBorder).BorderForeground(lipgloss.Color("63")).Bold(true).Foreground(lipgloss.Color("#84cb94")).BorderRightBackground(lipgloss.BrightGreen)
 
 	myCuteBorder = lipgloss.Border{
-		Top:         "._.:*:",
-		Bottom:      "._.:*:",
+		Top:         "------",
+		Bottom:      "------",
 		Left:        "|*",
 		Right:       "|*",
 		TopLeft:     "*",
@@ -163,12 +163,12 @@ func (m Model) View() tea.View {
 		if m.FocusIndex == 0 {
 
 			v.Cursor = m.TextInput1.Cursor()
-			v.Cursor.Y = lipgloss.Height(header)
+			v.Cursor.Y = lipgloss.Height(header) + 5
 			v.Cursor.X = m.TextInput1.Cursor().X
 
 		} else {
 			v.Cursor = m.TextInput2.Cursor()
-			v.Cursor.Y = lipgloss.Height(header) + 2
+			v.Cursor.Y = lipgloss.Height(header) + 5
 			v.Cursor.X = m.TextInput2.Cursor().X
 		}
 
