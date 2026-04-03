@@ -133,12 +133,12 @@ func (m Model) View() tea.View {
 		switch m.step {
 
 		case 0:
-			v := tea.NewView(textstyle.Render("Select Cover Image:\n\n") + m.CoverPicker.View())
+			v := tea.NewView(textstyle.Render("Select Cover Image:") + "\n" + m.CoverPicker.View())
 
 			v.AltScreen = true
 			return v
 		case 1:
-			v := tea.NewView("Select Secret File:\n\n" + m.SecretPicker.View())
+			v := tea.NewView(textstyle.Render("Select Secret File:") + "\n" + m.SecretPicker.View())
 			v.AltScreen = true
 			return v
 
