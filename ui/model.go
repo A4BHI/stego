@@ -11,18 +11,18 @@ import (
 )
 
 var (
-	bdr = lipgloss.NewStyle().BorderStyle(myCuteBorder).BorderForeground(lipgloss.Color("63")).Bold(true).Foreground(lipgloss.Color("#84cb94")).BorderRightBackground(lipgloss.BrightGreen)
+	bdr = lipgloss.NewStyle().BorderStyle(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color("63")).Bold(true).Foreground(lipgloss.Color("#84cb94")).BorderForegroundBlend(lipgloss.BrightCyan, lipgloss.BrightRed)
 
-	myCuteBorder = lipgloss.Border{
-		Top:         "------",
-		Bottom:      "------",
-		Left:        "|*",
-		Right:       "|*",
-		TopLeft:     "*",
-		TopRight:    "*",
-		BottomLeft:  "*",
-		BottomRight: "*",
-	}
+	// myCuteBorder = lipgloss.Border{
+	// 	Top:         "------",
+	// 	Bottom:      "------",
+	// 	Left:        "|*",
+	// 	Right:       "|*",
+	// 	TopLeft:     "*",
+	// 	TopRight:    "*",
+	// 	BottomLeft:  "*",
+	// 	BottomRight: "*",
+	// }
 
 	textstyle = lipgloss.NewStyle().
 			Bold(true).
@@ -132,19 +132,19 @@ func (m Model) View() tea.View {
 	switch m.screen {
 	case "#menu":
 		content := m.Welcome + "\n\n" + m.list.View()
-		v := tea.NewView(docStyle.Render(content))
+		v := tea.NewView(lipgloss.Place(m.width, m.height, lipgloss.Center, lipgloss.Center, bdr.Render(docStyle.Render(content))))
 		v.AltScreen = true
 		return v
 	case "#encode":
 		switch m.step {
 
 		case 0:
-			v := tea.NewView(textstyle.Render("Select Cover Image:") + "\n" + m.CoverPicker.View())
+			v := tea.NewView(lipgloss.Place(m.width, m.height, lipgloss.Center, lipgloss.Center, bdr.Render(textstyle.Render("Select Cover Image:")+"\n"+m.CoverPicker.View())))
 
 			v.AltScreen = true
 			return v
 		case 1:
-			v := tea.NewView(textstyle.Render("Select Secret File:") + "\n" + m.SecretPicker.View())
+			v := tea.NewView(lipgloss.Place(m.width, m.height, lipgloss.Center, lipgloss.Center, bdr.Render(textstyle.Render("Select Secret File:")+"\n"+m.SecretPicker.View())))
 			v.AltScreen = true
 
 			return v
