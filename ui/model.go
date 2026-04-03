@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	txtstyle = lipgloss.NewStyle().BorderStyle(myCuteBorder).BorderForeground(lipgloss.Color("63")).UnderlineStyle(lipgloss.UnderlineCurly)
+	bdr = lipgloss.NewStyle().BorderStyle(myCuteBorder).BorderForeground(lipgloss.Color("63")).Bold(true).Blink(true).Foreground(lipgloss.Color("#FAFAFA"))
 
 	myCuteBorder = lipgloss.Border{
 		Top:         "._.:*:",
@@ -23,6 +23,10 @@ var (
 		BottomLeft:  "*",
 		BottomRight: "*",
 	}
+
+	textstyle = lipgloss.NewStyle().
+			Bold(true).
+			Foreground(lipgloss.Color("#FAFAFA"))
 )
 
 type Model struct {
@@ -129,7 +133,7 @@ func (m Model) View() tea.View {
 		switch m.step {
 
 		case 0:
-			v := tea.NewView(txtstyle.Render("Select Cover Image:\n\n") + m.CoverPicker.View())
+			v := tea.NewView(textstyle.Render("Select Cover Image:\n\n") + m.CoverPicker.View())
 
 			v.AltScreen = true
 			return v
@@ -147,7 +151,7 @@ func (m Model) View() tea.View {
 			m.headerView()
 
 		str := header + "\n" + m.TextInput1.View() + "\nEnter Encryption Password\n" + m.TextInput2.View() + m.footerView()
-		str2 := lipgloss.Place(m.width, m.height, lipgloss.Center, lipgloss.Center, txtstyle.Render(str))
+		str2 := lipgloss.Place(m.width, m.height, lipgloss.Center, lipgloss.Center, bdr.Render(str))
 		v := tea.NewView("TESTING HEADING " + str2)
 		if m.FocusIndex == 0 {
 
