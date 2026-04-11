@@ -132,19 +132,19 @@ func (m Model) View() tea.View {
 	switch m.screen {
 	case "#menu":
 		content := m.Welcome + "\n\n" + m.list.View()
-		v := tea.NewView(lipgloss.Place(m.width, m.height, lipgloss.Center, lipgloss.Center, bdr.Render(docStyle.Render(content))))
+		v := tea.NewView(bdr.Render(docStyle.Render(content)))
 		v.AltScreen = true
 		return v
 	case "#encode":
 		switch m.step {
 
 		case 0:
-			v := tea.NewView(lipgloss.Place(m.width, m.height, lipgloss.Center, lipgloss.Center, bdr.Render(textstyle.Render("Select Cover Image:")+"\n"+m.CoverPicker.View())))
+			v := tea.NewView(bdr.Render(textstyle.Render("Select Cover Image:") + "\n" + m.CoverPicker.View()))
 
 			v.AltScreen = true
 			return v
 		case 1:
-			v := tea.NewView(lipgloss.Place(m.width, m.height, lipgloss.Center, lipgloss.Center, bdr.Render(textstyle.Render("Select Secret File:")+"\n"+m.SecretPicker.View())))
+			v := tea.NewView(bdr.Render(textstyle.Render("Select Secret File:") + "\n" + m.SecretPicker.View()))
 			v.AltScreen = true
 
 			return v
@@ -158,8 +158,8 @@ func (m Model) View() tea.View {
 			m.headerView()
 
 		str := header + "\n" + m.TextInput1.View() + "\nEnter Encryption Password\n" + m.TextInput2.View() + m.footerView()
-		str2 := lipgloss.Place(m.width, m.height, lipgloss.Center, lipgloss.Center, bdr.Render(str))
-		v := tea.NewView("TESTING HEADING " + str2)
+
+		v := tea.NewView("TESTING HEADING " + bdr.Render(str))
 		if m.FocusIndex == 0 {
 
 			v.Cursor = m.TextInput1.Cursor()
