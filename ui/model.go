@@ -159,22 +159,7 @@ func (m Model) View() tea.View {
 
 		str := header + "\n" + m.TextInput1.View() + "\nEnter Encryption Password\n" + m.TextInput2.View() + m.footerView()
 
-		v := tea.NewView(`                    ,----,                                        
-                   ,/   .`|                             ,----..    
-  .--.--.        ,`   .'  :     ,---,.   ,----..       /   /   \   
- /  /    '.    ;    ;     /   ,'  .' |  /   /   \     /   .     :  
-|  :  /`. /  .'___,/    ,'  ,---.'   | |   :     :   .   /   ;.  \ 
-;  |  |--`   |    :     |   |   |   .' .   |  ;. /  .   ;   /  ` ; 
-|  :  ;_     ;    |.';  ;   :   :  |-, .   ; /--`   ;   |  ; \ ; | 
- \  \    `.  `----'  |  |   :   |  ;/| ;   | ;  __  |   :  | ; | ' 
-  `----.   \     '   :  ;   |   :   .' |   : |.' .' .   |  ' ' ' : 
-  __ \  \  |     |   |  '   |   |  |-, .   | '_.' : '   ;  \; /  | 
- /  /`--'  /     '   :  |   '   :  ;/| '   ; : \  |  \   \  ',  /  
-'--'.     /      ;   |.'    |   |    \ '   | '/  .'   ;   :    /   
-  `--'---'       '---'      |   :   .' |   :    /      \   \ .'    
-                            |   | ,'    \   \ .'        `---`      
-                            `----'       `---`                     
-                                                                    \n\n\n\n + bdr.Render(str))
+		v := tea.NewView("\n\n\n\n" + bdr.Render(str))
 		if m.FocusIndex == 0 {
 
 			v.Cursor = m.TextInput1.Cursor()
